@@ -20,6 +20,7 @@ def main():
     config.read('dwh.cfg')
 
     conn = psycopg2.connect("host={} dbname={} user={} password={} port={}".format(*config['CLUSTER'].values()))
+    print(conn)
     cur = conn.cursor()
 
     drop_tables(cur, conn)
