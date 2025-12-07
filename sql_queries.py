@@ -217,6 +217,7 @@ FROM (
     WHERE ts IS NOT NULL
 )t;
 """)
+#Count the rows in each table
 staging_events_count = ("SELECT COUNT(*) FROM staging_events_table;")
 
 staging_songs_count = ("SELECT COUNT(*) FROM staging_songs_table;")
@@ -231,6 +232,9 @@ artist_table_count = ("SELECT COUNT(*) FROM artists;")
 
 time_table_count = ("SELECT COUNT(*) FROM time;")
 
+#some analysis i made
+
+# how many listener in each hour?
 most_listened_hour = ("""select t.hour, count(s.songplay_id)
 from songplays s
 JOIN time t 
@@ -238,6 +242,7 @@ ON s.start_time = t.start_time
 group by 1
 order by 2 DESC;""")
 
+#Who are the most famous artists?
 most_listened_artist = ("""SELECT a.artist, count(s.songplay_id)
 FROM songplays s
 JOIN artists a
@@ -246,6 +251,7 @@ GROUP BY 1
 order by 2 DESC
 limit 10;""")
 
+#how many artists with no audiance?
 artist_with_no_listeners = ("""SELECT COUNT(artist)
 FROM (SELECT a.artist, count(s.songplay_id) as num_of_listeners
     FROM songplays s
