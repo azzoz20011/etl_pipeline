@@ -4,6 +4,7 @@ from sql_queries import copy_table_queries, insert_table_queries,count_table_que
 
 
 def load_staging_tables(cur, conn):
+    """fill or extract the basic two tables: Staging events and Staging songs, whic h iwill transform the other tables """
     for query in copy_table_queries:
         try:
             cur.execute(query)
@@ -15,6 +16,7 @@ def load_staging_tables(cur, conn):
 
 
 def insert_tables(cur, conn):
+    """ I will trabsform the date in staging tables to five tables to ease the ability to read and analyse"""
     for query in insert_table_queries:
         try:
             cur.execute(query)
@@ -25,6 +27,7 @@ def insert_tables(cur, conn):
             print(f" Query failed:{e}")
 
 def count_tables(cur, conn):
+    """ Give the count of each table to confirm it transformed correctly """
     for query,query2 in zip(count_table_queries,tables):
         try:
             cur.execute(query)
@@ -34,6 +37,7 @@ def count_tables(cur, conn):
             print(f"[ERROR] Counting failed for: {query}\nReason: {e}")
 
 def analyze_tables(cur, conn):
+    """Give some stats about the newly created tables"""
     for query, query2 in zip(analysis_queries, analyze_questions):
         try:
             print(query2)

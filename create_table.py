@@ -4,12 +4,14 @@ from sql_queries import create_table_queries, drop_table_queries
 
 
 def drop_tables(cur, conn):
+    """ Delete the existing tables so i do not get any duplicate or any unexpected mistakes"""
     for query in drop_table_queries:
         cur.execute(query)
         conn.commit()
 
 
 def create_tables(cur, conn):
+    """ Create all tables and specify its columns"""
     for query in create_table_queries:
         cur.execute(query)
         conn.commit()
